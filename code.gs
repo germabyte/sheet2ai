@@ -167,13 +167,5 @@ function saveTextToDrive(textString, fileName, folderId) {
   }
 }
 
-// Run the main function when the script is executed.
-function onOpen() {
-  SpreadsheetApp.getUi()
-      .createMenu('LLM Export')
-      .addItem('Export Sheet Data to TXT', 'exportSheetDataToTxt')
-      .addToUi();
-}
-
 // Optional: Run the export function directly when you open the script editor for testing.
 // exportSheetDataToTxt();
