@@ -1,108 +1,137 @@
-# sheet2ai
+# 📄 README for `sheets2ai`
 
-## 1. Introduction and Purpose
+---
 
-sheet2ai is a Google Apps Script program designed to help users make their Google Sheets understandable by Large Language Models (LLMs), such as ChatGPT.  It solves the problem of directly uploading a Google Sheet to an LLM, which often leads to confusion or misinterpretation by the AI. This program converts the data from a Google Sheet into a specially formatted text file (.txt) that is easier for LLMs to process. This allows users to ask questions about their sheets, understand formulas, and analyze the data using an LLM.  The script runs entirely within the Google Apps Script editor associated with your Google Sheet.
+## 1. 📌 Introduction and Purpose
 
-The value of sheet2ai lies in bridging the gap between human-readable spreadsheets and LLM-interpretable data.  It eliminates the need for manual data conversion or tedious explanations to the LLM.
+### Introduction  
+`sheets2ai` is a Google Apps Script utility that **converts structured data from Google Sheets into a clean, readable TXT format** optimized for Large Language Models (LLMs). The tool processes every non-empty cell in the selected spreadsheet and saves the information into a text file on Google Drive.
 
-## 2. Dependencies (Required Software)
+### Purpose & Problem Statement  
+While LLMs can understand natural language, they often struggle to interpret complex, formula-laden spreadsheet data. `sheets2ai` solves this by exporting spreadsheet data — including formulas, values, and cell types — into a simple textual format that is both human- and machine-readable.
 
-To use sheet2ai, the following are required:
+### Value Proposition  
+- 🔍 **Simplifies spreadsheet structures** for better LLM interpretation.  
+- 📂 **Organizes data consistently** across multiple sheets.  
+- 📄 **Includes cell formulas and data types** for context.  
+- 🛠️ **User-configurable**, allowing exclusion of irrelevant sheets.  
+- 📤 **Saves directly to Google Drive**, ready for LLM processing.
 
-*   **Google Account:**  You need a Google Account to access Google Sheets and Google Drive.  This is where your spreadsheet is located and where the output text file will be saved.  If you don't have a Google Account, you can create one for free.
-*   **Google Sheet:** You need a Google Sheet containing the data you want to analyze.
-*   **Google Drive:** sheet2ai saves the generated text file to a folder in your Google Drive.
-*   **Web Browser:** You need a modern web browser (like Google Chrome, Mozilla Firefox, or Microsoft Edge) to access Google Sheets, Google Drive, and the Google Apps Script editor.
-* **No additional software downloads or installations are required.**  The script runs entirely within the Google ecosystem.
+---
 
-## 3. Getting Started (Installation and Execution)
+## 2. 🔧 Dependencies (Required Software/Libraries)
 
-Since sheet2ai is a Google Apps Script, it doesn't require traditional "installation."  Instead, you'll copy the script code into the Google Apps Script editor associated with your Google Sheet.
+This script runs entirely in the **Google Apps Script environment**, requiring no external installations.
 
-1.  **Open Your Google Sheet:** Open the Google Sheet you want to analyze with sheet2ai.
+### ✅ Required Platform:
+- **Google Apps Script**  
+  Built-in scripting platform for automating tasks in Google Workspace.  
+  **Why Needed?** Used to read Google Sheets, process cell data, and save TXT files in Google Drive.  
 
-2.  **Open the Script Editor:**
-    *   In your Google Sheet, go to "Tools" > "Script editor".  This will open a new tab with the Google Apps Script editor.
+### ✅ Required Services (automatically available in Google Apps Script):
+- `SpreadsheetApp`: Accesses and reads spreadsheet data.  
+- `DriveApp`: Writes TXT files to Google Drive.  
+- `Logger`: Logs execution progress and errors.
 
-3.  **Copy the Script Code:** Copy the entire code provided for sheet2ai (the code you provided in your request).
+> 💡 **No downloads or installations** are required beyond access to a Google account and Google Sheets.
 
-4.  **Paste the Code into the Script Editor:** In the Script editor, delete any existing code (usually a `myFunction()` example) and paste the copied sheet2ai code into the editor.
+---
 
-5.  **Configure the Script:**
-    *   **Find the Configuration Section:** Look for the section in the code that starts with `// **User Configuration - MODIFY THESE VALUES**`.
-    *   **`spreadsheetId`:**  Find the line `const spreadsheetId = 'YOUR_SPREADSHEET_ID_HERE';`.
-        *   Go back to your Google Sheet's browser tab.  Look at the address bar of your browser. You'll see a long string of characters in the URL after `/spreadsheets/d/` and before the next `/`.  This is your Spreadsheet ID.
-        *   Copy *only* the Spreadsheet ID.
-        *   Paste the Spreadsheet ID, replacing `'YOUR_SPREADSHEET_ID_HERE'` (keep the single quotes).  For example: `const spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';`
-    *   **`outputFolderId`:** Find the line `const outputFolderId = 'YOUR_OUTPUT_FOLDER_ID_HERE';`.
-        *   Open Google Drive in a new browser tab (`drive.google.com`).
-        *   Create a new folder (or use an existing one) where you want to save the output text files.
-        *   Open the folder you created (or chose).
-        *   Look at the address bar of your browser.  You'll see a string of characters in the URL after `/folders/`.  This is your Folder ID.
-        *   Copy *only* the Folder ID.
-        *   Paste the Folder ID, replacing `'YOUR_OUTPUT_FOLDER_ID_HERE'` (keep the single quotes). For example: `const outputFolderId = '0B2x-j51iN3H4f2NHdXRzX0U1ZlU';`
-    *   **`excludedSheetNames` (Optional):** Find the line `const excludedSheetNames = [];`.
-        *   If there are any sheets in your Google Sheet that you *don't* want to include in the analysis (e.g., a sheet with private data), list their names inside the square brackets, separated by commas, and enclosed in double quotes.  For example: `const excludedSheetNames = ["Sheet3", "Summary"];`
-        *   If you want to include *all* sheets, leave this line as it is: `const excludedSheetNames = [];`
+## 3. 🚀 Getting Started (Installation & Execution)
 
-6.  **Save the Script:**  Click the "Save" icon (it looks like a floppy disk) in the Script editor toolbar.  You might be prompted to give your project a name (e.g., "sheet2ai").
+### Step 1: Open Google Apps Script
+1. Open the **Google Sheet** you want to export.
+2. Click on **Extensions > Apps Script**.
 
-7.  **Run the Script:**
-    *   Click the "Run" button (it looks like a play button) in the Script editor toolbar.
-    *   The first time you run the script, Google will ask you to authorize it to access your Google Sheet and Google Drive.  Click "Review permissions" and follow the prompts to grant the necessary permissions. Choose "Advanced" and then click "Go to [your project name] (unsafe)" which is the project name you input when you saved the script. Finally click "Allow".
-    *   The script will now run.  You can monitor its progress in the "Execution log" window at the bottom of the Script editor.
+### Step 2: Add the Script
+1. Replace any existing code in the Apps Script editor with the full script provided in this repository.
+2. Click **File > Save** and give your project a name.
 
-8.  **Find the Output:** Once the script finishes, go to the Google Drive folder you specified in the `outputFolderId`.  You should find a new text file (`.txt`) with the same name as your Google Sheet, followed by "_data".  This file contains the extracted data in the format that LLMs can understand.
+### Step 3: Modify User Configuration
+At the top of the script, locate and modify these lines:
+```javascript
+const spreadsheetId = 'YOUR_SPREADSHEET_ID_HERE'; // Replace with actual Sheet ID
+const outputFolderId = 'YOUR_OUTPUT_FOLDER_ID_HERE'; // Replace with Drive folder ID
+const excludedSheetNames = []; // Optional: Add sheet names to exclude
+```
 
-## 4. Using the Program (User Guide)
+- **How to find `spreadsheetId`:**
+  - It's the string in your spreadsheet URL between `/d/` and `/edit`.
+  - Example: `https://docs.google.com/spreadsheets/d/123ABC456DEF789GHI/edit` → ID = `123ABC456DEF789GHI`
 
-Once you have run sheet2ai and generated the text file, you can use it with a Large Language Model.
+- **How to find `outputFolderId`:**
+  - Open your target Google Drive folder, and copy the string after `/folders/` in the URL.
 
-1.  **Access an LLM:** Go to a platform that provides access to an LLM, such as ChatGPT (openai.com).
+### Step 4: Run the Script
+1. In the Apps Script editor, click the function dropdown (next to the debug icon).
+2. Select `exportSheetDataToTxt`.
+3. Click the ▶️ **Run** button.
+4. Authorize the script when prompted.
 
-2.  **Upload or Paste the Text File:** Most LLMs allow you to upload files.  Upload the text file that sheet2ai created.  Alternatively, you can open the text file, copy its contents, and paste them directly into the LLM's input area.
+---
 
-3.  **Ask Questions:** Now you can start asking the LLM questions about your spreadsheet.  You can ask about:
-    *   Specific cell values: "What is the value of cell Sheet1!B5?"
-    *   Formulas: "Explain the formula in cell Sheet2!C10."
-    *   Relationships between cells: "How does the value in cell Sheet1!A1 affect the value in Sheet1!B2?"
-    *   Overall data analysis: "What is the total of all values in column C of Sheet1?"
+## 4. 🧑‍🏫 User Guide (How to Effectively Use the Program)
 
-4. **Interpreting the output:**
-   * The LLM will now be able to use the provided text file to understand the structure and content of the Google Sheet. The output file follows a structure where each line has the following format:
-     ```
-      Sheet: [Sheet Name]
-        Cell: [Sheet Name]![Cell Address], Value: [Cell Value], Formula: [Cell Formula or "data"], Data Type: [Data Type]
-     ```
-     For instance, a line might appear as:
-        `Cell: Sheet1!A1, Value: 10, Formula: data, Data Type: integer`
-     Or, if the cell has a formula:
-        `Cell: Sheet1!B2, Value: 20, Formula: =A1*2, Data Type: integer`
-     The output will follow the same format for each non-empty cell in the non-excluded sheets.
+### ✅ What the Script Does
+- Loops through all sheets (excluding those you specify).
+- For every non-empty cell, extracts:
+  - Sheet name
+  - Cell address (e.g., `Sheet1!A2`)
+  - Cell value
+  - Formula (if any)
+  - Data type (`text`, `number`, `integer`, `boolean`, `date`, `NaN`)
 
-## 5. Use Cases and Examples
+### ⚙️ Configuration Options
+- **Excluded Sheets:** Modify `excludedSheetNames` to ignore certain sheets:
+```javascript
+const excludedSheetNames = ["Instructions", "Calculations"];
+```
 
-Here are a few examples of how you can use sheet2ai with an LLM:
+### 📁 Output Format
+- A `.txt` file saved to your Google Drive folder, containing:
+```
+Sheet: Sheet1
+  Cell: Sheet1!A1, Value: Sales, Formula: data, Data Type: text
+  Cell: Sheet1!B2, Value: 1234.56, Formula: data, Data Type: number
+```
 
-**Scenario 1: Understanding a Complex Formula**
+---
 
-*   **Situation:** You have a complex formula in a cell (e.g., `Sheet1!D5`) that you don't fully understand.
-*   **Example:** You upload the text file to the LLM and ask: "Explain the formula in cell Sheet1!D5 in simple terms."
-*   **Expected Output:** The LLM should provide a clear, step-by-step explanation of what the formula does and how it calculates the result.
+## 5. 💡 Use Cases and Real-World Examples
 
-**Scenario 2: Analyzing Sales Data**
+### ✅ Use Case 1: Preparing Spreadsheet Data for LLMs
+**Scenario:** You want to feed tabular business data into GPT-4 for analysis.  
+**How It Helps:** `sheets2ai` exports structured data with context (formulas, types), making it LLM-friendly.  
+**Example Output:**  
+```
+Cell: Sheet1!C3, Value: =SUM(A1:A2), Formula: =SUM(A1:A2), Data Type: number
+```
 
-*   **Situation:** You have a Google Sheet containing sales data for different products across various regions.
-*   **Example:** You upload the text file and ask: "What is the total sales for Product A in the North region?" (Assuming your sheet has columns for Product and Region).
-*   **Expected Output:** The LLM should be able to locate the relevant data and calculate the total sales based on your query.
+---
 
-**Scenario 3: Identifying Dependencies**
+### ✅ Use Case 2: Extracting Audit-Ready Documentation from Sheets
+**Scenario:** You need to archive your financial model logic for an audit.  
+**How It Helps:** Formulas and values are exported clearly.  
+**Example Output:**  
+```
+Cell: Sheet2!E10, Value: 2025-01-01, Formula: data, Data Type: date
+```
 
-*   **Situation:** You want to know which cells are affected if you change the value of a particular cell.
-*   **Example:** You upload the file and ask: "If I change the value in cell Sheet2!A3, which other cells will be affected?"
-*   **Expected Output:** The LLM, by examining the formulas, can identify cells that directly or indirectly depend on Sheet2!A3 and might change their values as a result.
+---
 
-## 6. Disclaimer
+### ✅ Use Case 3: Training AI Models on Spreadsheet Patterns
+**Scenario:** You’re building a model that learns from spreadsheet structures.  
+**How It Helps:** Clean and consistent output of cell-level info enables easy data ingestion.  
+**Example Output:**  
+```
+Cell: Data!F5, Value: TRUE, Formula: data, Data Type: boolean
+```
 
-This repository, sheet2ai, is subject to updates at any time.  These updates may render portions of this README file outdated.  No guarantee is made that this README file will be updated to reflect changes in the repository. The code is provided "as-is" and without any warranty, express or implied. There is no guarantee that the code will work as expected or at all. Use at your own risk.
+---
+
+## 6. ⚠️ Disclaimer & Important Notices
+
+- This script and its functionality may change at any time without notice.  
+- Such changes may render parts of this README obsolete.  
+- The provided code is delivered **"as-is"** without any guarantees, warranties, or assurances of functionality, reliability, or compatibility.  
+- No commitment is made to maintain or update this code or its documentation.
